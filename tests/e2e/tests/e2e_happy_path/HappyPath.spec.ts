@@ -253,6 +253,7 @@ suite('Validation of debug functionality', async () => {
         await editor.selectTab(weclomeControllerJavaFileName);
         await topMenu.selectOption('View', 'Debug');
         await ide.waitLeftToolbarButton(LeftToolbarButton.Debug);
+        await driverHelper.getDriver().sleep(5000);
         await debugView.clickOnDebugConfigurationDropDown();
         await debugView.clickOnDebugConfigurationItem('Debug (Attach) - Remote (petclinic)');
         await debugView.clickOnRunDebugButton();
