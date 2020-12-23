@@ -251,6 +251,7 @@ suite('Validation of debug functionality', async () => {
 
     test('Run debug and check application stop in the breakpoint', async () => {
         await editor.selectTab(weclomeControllerJavaFileName);
+        await driverHelper.getDriver().sleep(5000);
         await topMenu.selectOption('View', 'Debug');
         await ide.waitLeftToolbarButton(LeftToolbarButton.Debug);
         await driverHelper.getDriver().sleep(5000);
