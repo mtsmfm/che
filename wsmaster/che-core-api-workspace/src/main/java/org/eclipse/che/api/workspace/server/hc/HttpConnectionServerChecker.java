@@ -71,7 +71,7 @@ public class HttpConnectionServerChecker extends ServerChecker {
       }
       return isConnectionSuccessful(httpURLConnection);
     } catch (IOException e) {
-      LOG.debug(
+      LOG.warn(
           "Failed to establish http connection to check server '{}'. Cause: {}",
           serverRef,
           e.getMessage());
@@ -103,7 +103,7 @@ public class HttpConnectionServerChecker extends ServerChecker {
         } catch (Exception e) {
           response = "failed to ready response: " + e.getMessage();
         }
-        LOG.debug(
+        LOG.warn(
             "Server check for '{}:{}' request failed with code {}. Response: {}",
             serverRef,
             url,
@@ -113,7 +113,7 @@ public class HttpConnectionServerChecker extends ServerChecker {
 
       return success;
     } catch (IOException e) {
-      LOG.debug(
+      LOG.warn(
           "Failed to establish http connection to check server '{}:{}'. Cause: {}",
           serverRef,
           url,

@@ -24,6 +24,8 @@ import org.eclipse.che.api.workspace.server.model.impl.ServerImpl;
 import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.workspace.infrastructure.kubernetes.Annotations;
 import org.eclipse.che.workspace.infrastructure.kubernetes.server.RuntimeServerBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@link ServerResolver} implementations that uses {@link Service} for internal servers can use
@@ -31,6 +33,7 @@ import org.eclipse.che.workspace.infrastructure.kubernetes.server.RuntimeServerB
  * implementing {@link AbstractServerResolver#resolveExternalServers(String)}.
  */
 public abstract class AbstractServerResolver implements ServerResolver {
+  private static final Logger LOG = LoggerFactory.getLogger(AbstractServerResolver.class);
 
   private final Multimap<String, Service> services;
 
@@ -77,6 +80,8 @@ public abstract class AbstractServerResolver implements ServerResolver {
   @Override
   public final Map<String, ServerImpl> resolve(String machineName) {
     Map<String, ServerImpl> servers = new HashMap<>();
+    LOG.info("[mtsmfm] resolveInternalServers machineName '{}'", machineName);
+    LOG.info("[mtsmfm] resolveInternalServers result '{}'", resolveInternalServers(machineName));
     servers.putAll(resolveInternalServers(machineName));
     servers.putAll(resolveExternalServers(machineName));
     return servers;
@@ -92,6 +97,10 @@ public abstract class AbstractServerResolver implements ServerResolver {
   }
 
   private Map<String, ServerImpl> resolveServiceServers(Service service) {
+    LOG.info("[mtsmfm] resolveServiceServers service '{}'", service);
+    LOG.info("[mtsmfm] resolveServiceServers service.getMetadata().getAnnotations() '{}'", service.getMetadata().getAnnotations());
+    LOG.info("[mtsmfm] resolveServiceServers servers '{}'", Annotations.newDeserializer(service.getMetadata().getAnnotations()).servers());
+
     return Annotations.newDeserializer(service.getMetadata().getAnnotations())
         .servers()
         .entrySet()

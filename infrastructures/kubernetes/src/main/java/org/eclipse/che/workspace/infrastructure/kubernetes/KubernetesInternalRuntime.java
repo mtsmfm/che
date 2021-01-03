@@ -628,6 +628,9 @@ public class KubernetesInternalRuntime<E extends KubernetesEnvironment>
     List<Ingress> readyIngresses = createIngresses(k8sEnv, workspaceId);
 
     listenEvents();
+    LOG.info("[mtsmfm] createdServices '{}'", createdServices);
+    LOG.info("[mtsmfm] readyIngresses '{}'", readyIngresses);
+    LOG.info("[mtsmfm] createdConfigMaps '{}'", createdConfigMaps);
 
     doStartMachine(
         serverResolverFactory.create(createdServices, readyIngresses, createdConfigMaps));
@@ -858,6 +861,8 @@ public class KubernetesInternalRuntime<E extends KubernetesEnvironment>
                                 + "Please report a bug. If possible, include the details from Che devfile and server log in bug report (your admin can help with that)",
                             workspaceId));
                   });
+      LOG.info("[mtsmfm] serverResolver.resolve: {}", serverResolver.resolve(machineName));
+
       machines.put(
           getContext().getIdentity(),
           new KubernetesMachineImpl(
