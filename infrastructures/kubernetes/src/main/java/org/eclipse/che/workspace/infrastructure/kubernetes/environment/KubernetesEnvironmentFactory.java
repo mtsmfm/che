@@ -44,6 +44,8 @@ import org.eclipse.che.api.workspace.server.spi.environment.RecipeRetriever;
 import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.workspace.infrastructure.kubernetes.Warnings;
 import org.eclipse.che.workspace.infrastructure.kubernetes.environment.KubernetesEnvironment.PodData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Parses {@link InternalEnvironment} into {@link KubernetesEnvironment}.
@@ -52,6 +54,8 @@ import org.eclipse.che.workspace.infrastructure.kubernetes.environment.Kubernete
  */
 public class KubernetesEnvironmentFactory
     extends InternalEnvironmentFactory<KubernetesEnvironment> {
+
+  private static final Logger LOG = LoggerFactory.getLogger(KubernetesEnvironmentFactory.class);
 
   private final KubernetesRecipeParser recipeParser;
   private final KubernetesEnvironmentValidator envValidator;
@@ -76,6 +80,14 @@ public class KubernetesEnvironmentFactory
       Map<String, InternalMachineConfig> machines,
       List<Warning> sourceWarnings)
       throws InfrastructureException, ValidationException {
+
+    LOG.info("[mtsmfm] KubernetesEnvironment#doCreate {}", machines);
+
+    StackTraceElement[] stes = Thread.currentThread().getStackTrace();
+    for (StackTraceElement element : stes) {
+        LOG.info("[mtsmfm] KubernetesEnvironment#doCreate stack trace {}", element);
+    }
+
     checkNotNull(recipe, "Null recipe is not supported by kubernetes environment factory");
     List<Warning> warnings = new ArrayList<>();
     if (sourceWarnings != null) {
