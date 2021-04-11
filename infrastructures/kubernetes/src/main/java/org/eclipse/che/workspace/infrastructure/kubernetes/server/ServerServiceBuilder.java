@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import org.eclipse.che.api.core.model.workspace.config.ServerConfig;
 import org.eclipse.che.workspace.infrastructure.kubernetes.Annotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Helps to build service that expose servers.
@@ -26,6 +28,7 @@ import org.eclipse.che.workspace.infrastructure.kubernetes.Annotations;
  * @author Sergii Leshchenko
  */
 public class ServerServiceBuilder {
+  private static final Logger LOG = LoggerFactory.getLogger(ServerServiceBuilder.class);
 
   private String name;
   private String machineName;
@@ -59,8 +62,15 @@ public class ServerServiceBuilder {
   }
 
   public Service build() {
+    Log.info("[mtsmfm] AbstractServerResolver#build called");
+    Log.info("[mtsmfm] AbstractServerResolver#build stack trace {}", Thread.currentThread().getStackTrace());
+
     io.fabric8.kubernetes.api.model.ServiceBuilder builder =
         new io.fabric8.kubernetes.api.model.ServiceBuilder();
+
+    Log.info("[mtsmfm] AbstractServerResolver#machineName {}", machineName);
+    Log.info("[mtsmfm] AbstractServerResolver#serversConfigs {}", serversConfigs);
+
     return builder
         .withNewMetadata()
         .withName(name.replace("/", "-").toLowerCase())
