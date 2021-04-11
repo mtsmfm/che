@@ -63,7 +63,10 @@ public class ServerServiceBuilder {
 
   public Service build() {
     LOG.info("[mtsmfm] AbstractServerResolver#build called");
-    LOG.info("[mtsmfm] AbstractServerResolver#build stack trace {}", Thread.currentThread().getStackTrace());
+    StackTraceElement[] stes = Thread.currentThread().getStackTrace();
+    for (StackTraceElement element : stes) {
+        LOG.info("[mtsmfm] AbstractServerResolver#build stack trace {}", element);
+    }
 
     io.fabric8.kubernetes.api.model.ServiceBuilder builder =
         new io.fabric8.kubernetes.api.model.ServiceBuilder();
