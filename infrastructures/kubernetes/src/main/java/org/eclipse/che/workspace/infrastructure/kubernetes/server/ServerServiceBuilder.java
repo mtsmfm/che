@@ -62,14 +62,14 @@ public class ServerServiceBuilder {
   }
 
   public Service build() {
-    Log.info("[mtsmfm] AbstractServerResolver#build called");
-    Log.info("[mtsmfm] AbstractServerResolver#build stack trace {}", Thread.currentThread().getStackTrace());
+    LOG.info("[mtsmfm] AbstractServerResolver#build called");
+    LOG.info("[mtsmfm] AbstractServerResolver#build stack trace {}", Thread.currentThread().getStackTrace());
 
     io.fabric8.kubernetes.api.model.ServiceBuilder builder =
         new io.fabric8.kubernetes.api.model.ServiceBuilder();
 
-    Log.info("[mtsmfm] AbstractServerResolver#machineName {}", machineName);
-    Log.info("[mtsmfm] AbstractServerResolver#serversConfigs {}", serversConfigs);
+    LOG.info("[mtsmfm] AbstractServerResolver#machineName {}", machineName);
+    LOG.info("[mtsmfm] AbstractServerResolver#serversConfigs {}", serversConfigs);
 
     return builder
         .withNewMetadata()
