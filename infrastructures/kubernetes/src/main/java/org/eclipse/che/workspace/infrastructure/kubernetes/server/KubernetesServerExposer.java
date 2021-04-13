@@ -181,8 +181,14 @@ public class KubernetesServerExposer<T extends KubernetesEnvironment> {
     Map<String, ServicePort> unsecuredPorts = new HashMap<>();
     Map<String, ServicePort> securedPorts = new HashMap<>();
 
+    LOG.info("[mtsmfm] splitServersAndPortsByExposureType servers {}", servers);
+
     splitServersAndPortsByExposureType(
         servers, internalServers, externalServers, secureServers, unsecuredPorts, securedPorts);
+
+    LOG.info("[mtsmfm] splitServersAndPortsByExposureType internalServers {}", internalServers);
+    LOG.info("[mtsmfm] splitServersAndPortsByExposureType externalServers {}", externalServers);
+    LOG.info("[mtsmfm] splitServersAndPortsByExposureType secureServers {}", secureServers);
 
     provisionServicesForDiscoverableServers(servers);
 
