@@ -29,6 +29,8 @@ import javax.persistence.Table;
 import org.eclipse.che.api.core.model.workspace.config.Environment;
 import org.eclipse.che.api.core.model.workspace.config.MachineConfig;
 import org.eclipse.che.api.core.model.workspace.config.Recipe;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Data object for {@link Environment}.
@@ -38,6 +40,7 @@ import org.eclipse.che.api.core.model.workspace.config.Recipe;
 @Entity(name = "Environment")
 @Table(name = "environment")
 public class EnvironmentImpl implements Environment {
+  private static final Logger LOG = LoggerFactory.getLogger(EnvironmentImpl.class);
 
   @Id
   @GeneratedValue
@@ -90,6 +93,11 @@ public class EnvironmentImpl implements Environment {
   }
 
   public void setMachines(Map<String, MachineConfigImpl> machines) {
+    LOG.info("[mtsmfm] setMachines {}", machines);
+    StackTraceElement[] stes = Thread.currentThread().getStackTrace();
+    for (StackTraceElement element : stes) {
+        LOG.info("[mtsmfm] setMachines stack trace {}", element);
+    }
     this.machines = machines;
   }
 
