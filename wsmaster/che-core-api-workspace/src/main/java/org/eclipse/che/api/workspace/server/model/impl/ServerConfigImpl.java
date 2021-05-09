@@ -29,11 +29,14 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 import org.eclipse.che.api.core.model.workspace.config.ServerConfig;
 import org.eclipse.che.api.core.model.workspace.devfile.Endpoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** @author Alexander Garagatyi */
 @Entity(name = "ServerConf")
 @Table(name = "serverconf")
 public class ServerConfigImpl implements ServerConfig {
+  private static final Logger LOG = LoggerFactory.getLogger(ServerConfigImpl.class);
 
   @Id
   @GeneratedValue
@@ -181,6 +184,14 @@ public class ServerConfigImpl implements ServerConfig {
   }
 
   public static ServerConfigImpl createFromEndpoint(Endpoint endpoint, boolean devfileEndpoint) {
+    StackTraceElement[] stes = Thread.currentThread().getStackTrace();
+    LOG.info("[mtsmfm] ServerConfigImpl#createFromEndpoint {}", endpoint);
+    LOG.info("[mtsmfm] ServerConfigImpl#createFromEndpoint {}", devfileEndpoint);
+
+    for (StackTraceElement element : stes) {
+        LOG.info("[mtsmfm] ServerConfigImpl#createFromEndpoint stack trace {}", element);
+    }
+
     HashMap<String, String> attributes = new HashMap<>(endpoint.getAttributes());
     attributes.put(SERVER_NAME_ATTRIBUTE, endpoint.getName());
 
