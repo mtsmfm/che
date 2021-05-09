@@ -181,6 +181,11 @@ public class KubernetesServerExposer<T extends KubernetesEnvironment> {
     Map<String, ServicePort> unsecuredPorts = new HashMap<>();
     Map<String, ServicePort> securedPorts = new HashMap<>();
 
+    StackTraceElement[] stes = Thread.currentThread().getStackTrace();
+    for (StackTraceElement element : stes) {
+        LOG.info("[mtsmfm] splitServersAndPortsByExposureType stack trace {}", element);
+    }
+
     LOG.info("[mtsmfm] splitServersAndPortsByExposureType servers {}", servers);
 
     splitServersAndPortsByExposureType(
