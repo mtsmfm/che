@@ -26,6 +26,8 @@ import org.eclipse.che.api.workspace.server.model.impl.CommandImpl;
 import org.eclipse.che.api.workspace.server.model.impl.devfile.DevfileImpl;
 import org.eclipse.che.api.workspace.server.spi.RuntimeInfrastructure;
 import org.eclipse.che.commons.annotation.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Representation of {@link Environment} which holds internal representations of environment
@@ -39,6 +41,9 @@ import org.eclipse.che.commons.annotation.Nullable;
  * @author gazarenkov
  */
 public abstract class InternalEnvironment {
+
+  private static final Logger LOG = LoggerFactory.getLogger(InternalEnvironment.class);
+
   private String type;
   private InternalRecipe recipe;
   private Map<String, InternalMachineConfig> machines;
@@ -113,6 +118,12 @@ public abstract class InternalEnvironment {
   }
 
   public InternalEnvironment setMachines(Map<String, InternalMachineConfig> machines) {
+    StackTraceElement[] stes = Thread.currentThread().getStackTrace();
+    for (StackTraceElement element : stes) {
+      LOG.info("[mtsmfm] setMachines stack trace {}", element);
+    }
+    LOG.info("[mtsmfm] setMachines machines {}", machines);
+
     this.machines = machines;
     return this;
   }
